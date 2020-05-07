@@ -9,6 +9,9 @@ const server: http.Server = http.createServer(app);
 const port: number = 3000;
 const routes: Array<any> = [];
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 routes.push(new UsersRoutes(app));
 
 app.get("/", (request: express.Request, response: express.Response) => {

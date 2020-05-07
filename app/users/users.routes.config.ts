@@ -1,5 +1,6 @@
 import express from "express";
-import { CommonRoutesConfig, configureRoutes } from "../common/common.routes.config";
+import { CommonRoutesConfig } from "../common/common.routes.config";
+import { configureRoutes } from "../common/interfaces";
 import { UsersController } from "./controllers/users.controller";
 
 export class UsersRoutes extends CommonRoutesConfig implements configureRoutes {

@@ -13,9 +13,3 @@ export class CommonRoutesConfig {
     return this.name;
   }
 }
-
-export interface configureRoutes {
-  app: express.Application;
-  name: string;
-  getName(): string;
-}
