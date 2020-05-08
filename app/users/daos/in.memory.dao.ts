@@ -24,11 +24,24 @@ export class GenericInMemoryDao {
   }
 
   public getUserById(id: string): any {
-    return this.users.find((user: { id: string; }) => user.id === id);
+    return this.users.find((user: { id: string; }) => user.id.toString() === id.toString());
+  }
+
+  public getByEmail(email: string): any {
+    return new Promise((resolve) => {
+      const objIndex: any = this.users.findIndex((obj: { email: any; }) => obj.email === email);
+      let currentUser: any = this.users[objIndex];
+
+      if (currentUser) {
+        resolve(currentUser);
+      } else {
+        resolve(null);
+      }
+    });
   }
 
   public putUserById(user: any): string {
-    const objIndex: any = this.users.findIndex((obj: { id: string; }) => obj.id === user.id);
+    const objIndex: any = this.users.findIndex((obj: { id: string; }) => obj.id.toString() === user.id.toString());
     const updatedUsers: Array<any> = [...this.users.slice(0, objIndex), user, ...this.users.slice(objIndex + 1)];
 
     this.users = updatedUsers;
@@ -36,7 +49,7 @@ export class GenericInMemoryDao {
   }
 
   public patchUserById(user: any): string {
-    const objIndex: any = this.users.findIndex((obj: { id: string; }) => obj.id === user.id);
+    const objIndex: any = this.users.findIndex((obj: { id: string; }) => obj.id.toString() === user.id.toString());
     let currentUser: any = this.users[objIndex];
 
     for (let i in user) {
@@ -50,7 +63,7 @@ export class GenericInMemoryDao {
   }
 
   public removeUserById(id: string): string {
-    const objIndex: any = this.users.findIndex((obj: { id: string; }) => obj.id === id);
+    const objIndex: any = this.users.findIndex((obj: { id: string; }) => obj.id.toString() === id.toString());
 
     this.users = this.users.splice(objIndex, objIndex);
     return `${id} removed`;

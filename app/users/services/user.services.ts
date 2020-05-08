@@ -40,4 +40,8 @@ export class UsersService implements CRUD {
   public deleteById(id: string): string {
     return this.dao.removeUserById(id);
   }
+
+  public async getByEmail(email: string): Promise<any> {
+    return this.dao.getByEmail(email);
+  }
 }
