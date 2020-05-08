@@ -2,6 +2,7 @@ import express from "express";
 import * as http from "http";
 
 import { CommonRoutesConfig } from "./common/common.routes.config";
+import { AuthRoutes } from "./auth/auth.routes.config";
 import { UsersRoutes } from "./users/users.routes.config";
 
 const app: express.Application = express();
@@ -12,6 +13,7 @@ const routes: Array<any> = [];
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+routes.push(new AuthRoutes(app));
 routes.push(new UsersRoutes(app));
 
 app.get("/", (request: express.Request, response: express.Response) => {
