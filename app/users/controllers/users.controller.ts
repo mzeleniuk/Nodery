@@ -24,7 +24,7 @@ export class UsersController {
     const password: any = Buffer.from(request.body.password);
 
     request.body.password = (await sp.hashPassword(password));
-    request.body.permissionLevel = 8;
+    request.body.permissionLevel = 1 + 2 + 4 + 8;
 
     const userId: string = await usersService.create(request.body);
 

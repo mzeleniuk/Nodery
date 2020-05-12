@@ -22,7 +22,7 @@ it("should POST /users", async function () {
   expect(res.status).to.equal(201);
   expect(res.body).not.to.be.empty;
   expect(res.body).to.be.an("object");
-  expect(res.body._id).to.be.an('string');
+  expect(res.body._id).to.be.an("string");
 
   firstUserIdTest = res.body._id;
 });
@@ -90,7 +90,11 @@ it("should POST to /auth/refresh-token and retrieve a new access token", async (
 });
 
 it("should DELETE /users/:id", async function () {
-  const res: any = await request(app).delete(`/users/${firstUserIdTest}`).send();
+  const res: any = await request(app)
+    .delete(`/users/${firstUserIdTest}`)
+    .set("Accept", "application/json")
+    .set("Authorization", `Bearer ${jwt.accessToken}`)
+    .send();
 
   expect(res.status).to.equal(204);
 });
