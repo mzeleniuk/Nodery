@@ -28,12 +28,12 @@ export class AuthMiddleware {
 
     if (user) {
       const sp: any = new SecurePass();
-      const passwordHash: string = sp.hashPasswordSync(Buffer.from(user.password));
+      const passwordHash: any = Buffer.from(user.password);
       const result: any = await sp.verifyHash(Buffer.from(req.body.password), passwordHash);
 
       if (SecurePass.isValid(result)) {
         req.body = {
-          id: user.id,
+          id: user._id,
           email: user.email,
           provider: "email",
           permissionLevel: user.permissionLevel

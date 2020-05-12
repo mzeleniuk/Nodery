@@ -1,45 +1,53 @@
 import express from "express";
+import { SecurePass } from "argon2-pass";
+
 import { UsersService } from "../services/user.services";
 
 export class UsersController {
-  public index(request: express.Request, response: express.Response) {
+  public async index(request: express.Request, response: express.Response) {
     const usersService: any = UsersService.getInstance();
-    const users: Array<any> = usersService.list(100, 0);
+    const users: Array<any> = await usersService.list(100, 0);
 
     response.status(200).send(users);
   }
 
-  public get(request: express.Request, response: express.Response) {
+  public async get(request: express.Request, response: express.Response) {
     const usersService: any = UsersService.getInstance();
-    const user: any = usersService.readById(request.params.id);
+    const user: any = await usersService.readById(request.params.id);
 
     response.status(200).send(user);
   }
 
-  public create(request: express.Request, response: express.Response) {
+  public async create(request: express.Request, response: express.Response) {
     const usersService: any = UsersService.getInstance();
-    const user: any = usersService.create(request.body);
+    const sp: any = new SecurePass();
+    const password: any = Buffer.from(request.body.password);
 
-    response.status(201).send({ user: user });
+    request.body.password = (await sp.hashPassword(password));
+    request.body.permissionLevel = 8;
+
+    const userId: string = await usersService.create(request.body);
+
+    response.status(201).send({ _id: userId });
   }
 
-  public patch(request: express.Request, response: express.Response) {
+  public async patch(request: express.Request, response: express.Response) {
     const usersService: any = UsersService.getInstance();
-    const result: string = usersService.patchById(request.body);
+    const result: string = await usersService.patchById(request.body);
 
     response.status(204).send(result);
   }
 
-  public put(request: express.Request, response: express.Response) {
+  public async put(request: express.Request, response: express.Response) {
     const usersService: any = UsersService.getInstance();
-    const result: string = usersService.updateById(request.body);
+    const result: string = await usersService.updateById(request.body);
 
     response.status(204).send(result);
   }
 
-  public delete(request: express.Request, response: express.Response) {
+  public async delete(request: express.Request, response: express.Response) {
     const usersService: any = UsersService.getInstance();
-    const result: string = usersService.deleteById(request.params.id);
+    const result: string = await usersService.deleteById(request.params.id);
 
     response.status(204).send(result);
   }

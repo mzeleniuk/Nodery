@@ -43,7 +43,7 @@ export class UsersMiddleware {
   }
 
   public async extractUserId(req: express.Request, res: express.Response, next: express.NextFunction) {
-    req.body.id = req.params.id;
+    req.body._id = req.params.id;
     next();
   }
 }

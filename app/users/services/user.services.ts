@@ -1,4 +1,5 @@
 import { GenericInMemoryDao } from "../daos/in.memory.dao";
+import { UsersDao } from "../daos/users.dao";
 import { CRUD } from "../../common/interfaces";
 
 export class UsersService implements CRUD {
@@ -18,30 +19,30 @@ export class UsersService implements CRUD {
   }
 
   public list(limit: number, page: number): Array<any> {
-    return this.dao.getUsers();
+    return UsersDao.getInstance().listUsers(limit, page);
   }
 
   public readById(id: string): any {
-    return this.dao.getUserById(id);
+    return UsersDao.getInstance().getUserById(id);
   }
 
   public create(user: any): any {
-    return this.dao.addUser(user);
+    return UsersDao.getInstance().addUser(user);
   }
 
   public updateById(user: any): string {
-    return this.dao.putUserById(user);
+    return UsersDao.getInstance().patchUser(user);
   }
 
   public patchById(user: any): string {
-    return this.dao.patchUserById(user);
+    return UsersDao.getInstance().patchUser(user);
   }
 
   public deleteById(id: string): string {
-    return this.dao.removeUserById(id);
+    return UsersDao.getInstance().removeUserById(id);
   }
 
   public async getByEmail(email: string): Promise<any> {
-    return this.dao.getByEmail(email);
+    return UsersDao.getInstance().getUserByEmail(email);
   }
 }
