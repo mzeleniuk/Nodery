@@ -5,10 +5,15 @@
   "main": "dist/app.js",
   "scripts": {
     "dev": "nodemon --watch . --ext ts --exec 'docker-compose build && docker-compose up'",
+    "dev-debug": "nodemon --watch . --ext ts --exec 'npm run tsc'",
     "start": "npm run tsc && node ./dist/app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "test-dev": "nodemon --watch . --ext ts --exec 'mocha -r ts-node/register tests/**/*.test.ts'",
     "tsc": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mzeleniuk/Nodery.git"
   },
   "keywords": [
     "API",
@@ -21,9 +26,11 @@
   "dependencies": {
     "argon2-pass": "1.0.2",
     "express": "4.17.1",
+    "express-winston": "4.0.3",
     "jsonwebtoken": "8.5.1",
     "mongoose": "5.9.13",
-    "short-uuid": "3.1.1"
+    "short-uuid": "3.1.1",
+    "winston": "3.2.1"
   },
   "devDependencies": {
     "@types/chai": "4.2.11",
